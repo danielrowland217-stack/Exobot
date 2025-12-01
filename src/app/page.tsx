@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 function SwipeToStartButton() {
   const handleClick = () => {
-    window.open('https://wa.me/+15733521748', '_blank', 'noopener,noreferrer');
+    window.location.href = 'https://t.me/Exotype01bot';
   };
 
   return (
@@ -14,9 +14,9 @@ function SwipeToStartButton() {
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.2}
       onDragEnd={(e, { offset }) => {
-        if (offset.x > 150) {
-          window.location.href = 'https://wa.me/+15733521748';
-        }
+if (offset.x > 150) {
+  window.location.href = 'https://t.me/Exotype01bot';
+}
       }}
       onClick={handleClick}
       className="group relative cursor-grab overflow-hidden rounded-full bg-gradient-to-r from-yellow-500 to-black px-8 py-5 shadow-2xl active:cursor-grabbing"
@@ -49,29 +49,25 @@ export default function ArtifyNFTOnboarding() {
   ];
 
   const images = [
-    "/photo-1552848031-326ec03fe2ec.jpg",
-    "/photo-1571388208497-71bedc66e932.jpg",
-    "/photo-1610312856669-2cee66b2949c.jpg",
-    "/photo-1621750627159-cf77b0b91aac.jpg",
-    "/photo-1642267165393-951c20e0a8b8.jpg",
-    "/photo-1688521011206-f72fce2343c4.jpg",
-    "/photo-1719239163473-780ee79dfffd.jpg"
+    "/premium_photo-1737059984475-0de9c0dcacf1.jpg",
+    "/premium_photo-1737059984272-11f837d448e7.jpg",
+    "/premium_photo-1737059983495-fd53c6d72722.jpg",
+    "/premium_photo-1737059984674-5ef17c8ad212.jpg",
+    "/premium_photo-1737059983277-eb12cc669859.jpg"
   ];
 
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [displayedText, setDisplayedText] = useState("");
-  const [isTyping, setIsTyping] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [pauseAuto, setPauseAuto] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
   const [isClient, setIsClient] = useState(false);
   const [windowWidth, setWindowWidth] = useState(1024); // Default width
 
   const particles = useMemo(() => {
-    return Array.from({ length: 20 }).map(() => ({
-      left: `${Math.random() * 100}%`,
-      animationDelay: `${Math.random() * 10}s`,
-      animationDuration: `${10 + Math.random() * 10}s`,
+    return Array.from({ length: 20 }).map((_, i) => ({
+      left: `${(i * 5) % 100}%`,
+      animationDelay: `${(i * 0.5) % 10}s`,
+      animationDuration: `${10 + (i * 0.5) % 10}s`,
     }));
   }, []);
 
@@ -83,8 +79,6 @@ export default function ArtifyNFTOnboarding() {
   }, []);
 
   useEffect(() => {
-    if (!isTyping) return;
-
     const text = texts[currentTextIndex];
 
     if (displayedText.length < text.length) {
@@ -100,7 +94,7 @@ export default function ArtifyNFTOnboarding() {
       }, 1000);
       return () => clearTimeout(timeout);
     }
-  }, [displayedText, currentTextIndex, isTyping, texts]);
+  }, [displayedText, currentTextIndex, texts]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -111,14 +105,7 @@ export default function ArtifyNFTOnboarding() {
     return () => clearInterval(interval);
   }, [images.length, pauseAuto]);
 
-  useEffect(() => {
-    if (!isClient) return;
-    if (typeof window !== 'undefined') {
-      const handleScroll = () => setScrollY(window.scrollY);
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
-    }
-  }, [isClient]);
+
 
   return (
     <div className="relative min-h-screen overflow-hidden flex flex-col items-center justify-end pb-20 text-center">
@@ -153,8 +140,8 @@ export default function ArtifyNFTOnboarding() {
               <Image
                 src={image}
                 alt={`Background ${index + 1}`}
-                layout="fill"
-                objectFit="cover"
+                fill
+                style={{ objectFit: "cover" }}
                 priority={index === 0}
               />
             </div>
@@ -164,7 +151,7 @@ export default function ArtifyNFTOnboarding() {
       </div>
 
       {/* Subtle Particle Background */}
-      <div className="absolute inset-0 z-5 pointer-events-none">
+      <div className="absolute inset-0 z-0 pointer-events-none">
         {particles.map((particle, i) => (
           <div
             key={i}
@@ -181,11 +168,11 @@ export default function ArtifyNFTOnboarding() {
       {/* Logo – now fixed at top-left */}
       <div className="absolute top-0 left-0 z-30 px-7 pt-8 md:pt-10">
         <Image
-          src="/logo.png"
+          src="/logo-removebg-preview.png"
           alt="Logo"
           width={80}
           height={80}
-          className="rounded-full filter invert sepia saturate-500 hue-rotate-45"
+          className="[filter:drop-shadow(0_0_8px_rgba(234,179,8,1))]"
           priority
         />
       </div>
